@@ -104,22 +104,55 @@ print(myTable.newKey)
 -- to actually add that we need rawset
 
 -- creating npc class
-
+--[[
 local NPC = {}
 NPC.__index = NPC
 
-function NPC.new(name, age, health)
+function NPC:new(name, age, health, position, dialogue, quests)
 
     local self = setmetatable({}, NPC)
 
     self.name = name
     self.age = age
     self.health = health
-
+    self.position = position
+    self.dialogue = dialogue
+    self.quests = quests
+    self.state = "Idle"
     return self
 
 end
 
-local guardNpc = NPC.new("Guard", 29, 100)
+-- Class methods / functions
+function NPC:Speak(dialogueIndex)
+    -- code block
+    return self.dialogue[dialogueIndex]
+end
 
-print(guardNpc.name)
+function NPC:AssignQuest(questIndex)
+    --code block
+    return self.quests[questIndex]
+end
+
+function NPC:TakeDamage(damage)
+    self.health -= damage
+end
+
+function NPC:Move(targetPosition)
+    -- code block
+    self.Position = targetPosition
+end
+
+function NPC:UpdateState(newState)
+    self.state = newState
+end
+
+
+local guardNpc = NPC:new("Guard", 29, 100,
+    {x = 0, y = 0},
+    {"Hello traveler", "Stay safe"},
+    {"Find the sword", "Defeat the goblin"}
+)
+
+print(guardNpc.dialogue)
+]]

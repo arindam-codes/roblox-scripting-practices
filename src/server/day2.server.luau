@@ -103,3 +103,23 @@ print(myTable.newKey)
 -- __newindex just for checking ok i am trying to add something but it will not actualy add that 
 -- to actually add that we need rawset
 
+-- creating npc class
+
+local NPC = {}
+NPC.__index = NPC
+
+function NPC.new(name, age, health)
+
+    local self = setmetatable({}, NPC)
+
+    self.name = name
+    self.age = age
+    self.health = health
+
+    return self
+
+end
+
+local guardNpc = NPC.new("Guard", 29, 100)
+
+print(guardNpc.name)

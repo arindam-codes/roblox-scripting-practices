@@ -154,5 +154,5 @@ local guardNpc = NPC:new("Guard", 29, 100,
     {"Find the sword", "Defeat the goblin"}
 )
 
-print(guardNpc.dialogue)
+print(guardNpc:speak(1))
 ]]

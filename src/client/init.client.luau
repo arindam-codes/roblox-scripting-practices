@@ -1,7 +1,10 @@
+--[[
+print("Script Started")
 local Players  = game:GetService("Players")
 
 local player = Players.LocalPlayer
 
+print("Got player")
 local character = player.Character or player.CharacterAdded:Wait()
 
 if not character then
@@ -9,12 +12,16 @@ if not character then
     return
 end
 
+print("Got character")
+
 local humanoid = character:WaitForChild("Humanoid", 10)
 
 if not humanoid then
     warn("Humanoid not found ")
     return
 end
+
+print("Got humanoid")
 
 print(humanoid.Health)
 
@@ -30,3 +37,66 @@ print(humanoid.Health)
 -- it will serach humanoid for 10 seconds
 -- if humanoid found within 10 seconds return child
 -- else warn
+
+
+]]
+
+-- method 1: longer
+--[[
+local part = workspace:WaitForChild("bridgeTrigger")
+part.Anchored = true
+
+part.Touched:Connect(function(hitPart)
+    
+    local character = hitPart.Parent
+    local player = game.Players:GetPlayerFromCharacter(character)
+
+    if not player then return end
+    local humanoid = character:WaitForChild("Humanoid")
+
+    humanoid.JumpPower = 0
+    humanoid.JumpHeight = 0
+    
+end
+)
+]]
+
+--[[
+    Workspace
+ └── Character (Model)   ← THIS is what you want
+      ├── Humanoid
+      ├── HumanoidRootPart
+      ├── Head
+      ├── LeftHand / RightHand
+      ├── Accessories
+      │    └── Pal Hair (Accessory)
+      │         └── Handle (BasePart)  ← this often touches things
+      ├── Shirt / Pants
+      └── Other body parts
+]]
+
+-- sometimes on touched function handle can be touched too with that part 
+-- so we can do hiPart.Parent ~= character but equals to Pal Hair
+-- so we need to use ( not findfirstancestor bcz this is random for every players user id)
+-- we need to use findfirstancestorofclass which is a model and then model:WaitForChild("Humanoid")
+-- thus we get humanoid
+
+
+--[[
+local part = workspace:WaitForChild("bridgeTrigger")
+part.Anchored = true
+
+part.Touched:Connect(function(hitPart)
+    local character = hitPart:FindFirstAncestorOfClass("Model")
+    if not character then return end
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.JumpPower = 0
+    humanoid.JumpHeight = 0
+
+end
+)
+]]
+
+
+
+

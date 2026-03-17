@@ -13,6 +13,7 @@ local humanoid = character:WaitForChild("Humanoid", 10)
 
 if not humanoid then
     warn("Humanoid not found ")
+    return
 end
 
 print(humanoid.Health)
@@ -26,3 +27,6 @@ print(humanoid.Health)
 -- understood timeout without timeout if humanoid doesnt load it wil search for ever
 -- and script will block forever or roblox can show the infinite error
 -- thats why we need to add timeout local humanoid = character:WaitForChild("Humanoid", 10)
+-- it will serach humanoid for 10 seconds
+-- if humanoid found within 10 seconds return child
+-- else warn
